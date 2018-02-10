@@ -7,7 +7,9 @@
  * Released under the MIT License.
  */
 
-// app mode constants
+import { Model } from './model';
+
+ // app mode constants
 var MODE = {
       EDIT: 0,
       EVAL: 1
@@ -18,7 +20,7 @@ var MODE = {
 var propvars = ['p','q','r','s','t'],
     varCount = 2;
 
-var model = new MPL.Model(),
+var model = new Model(),
     modelString = 'AS1;ApS1,2;AqS;';
 
 var modelParam = window.location.search.match(/\?model=(.*)/);
@@ -188,6 +190,7 @@ function evaluateFormula() {
   }
 
   // parse formula and catch bad input
+  // TODO -- replace with parser
   var wff = null;
   try {
     wff = new MPL.Wff(formula);
@@ -198,7 +201,10 @@ function evaluateFormula() {
     return;
   }
 
+  // TODO -- validate model
+
   // evaluate formula at each state in model
+  // TODO -- replace with evaluator
   var trueStates  = [],
       falseStates = [];
   nodes.forEach(function(node, index) {
