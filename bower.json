@@ -1,0 +1,19 @@
+{
+  "name": "kripke-explorer",
+  "description": "Kripke semantics for intuitionistic propositional logic",
+  "main": "src/app.js",
+  "authors": [
+    "Ross Kirsling",
+    "Harrison Brown"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/hrb90/kripke-explorer",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

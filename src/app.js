@@ -8,6 +8,7 @@
  */
 
 import { Model } from './model';
+import { validateExternal } from './purs/Logics/Intuitionistic/Validation.purs';
 
  // app mode constants
 var MODE = {
@@ -189,36 +190,46 @@ function evaluateFormula() {
     return;
   }
 
+  const modelPurs = model.getPursForeign();
+
   // parse formula and catch bad input
   // TODO -- replace with parser
   var wff = null;
-  try {
-    wff = new MPL.Wff(formula);
-  } catch(e) {
+  // try {
+  //   wff = new MPL.Wff(formula);
+  // } catch(e) {
+  //   evalOutput
+  //     .html('<div class="alert">Invalid formula!</div>')
+  //     .classed('inactive', false);
+  //   return;
+  // }
+
+  // TODO -- validate model
+  
+  const validationErrors = validateExternal(modelPurs);
+  if (validationErrors.length > 0) {
     evalOutput
-      .html('<div class="alert">Invalid formula!</div>')
+      .html(`<div class="alert">Invalid model: ${validationErrors.join("\n")} </div>`)
       .classed('inactive', false);
     return;
   }
-
-  // TODO -- validate model
 
   // evaluate formula at each state in model
   // TODO -- replace with evaluator
   var trueStates  = [],
       falseStates = [];
-  nodes.forEach(function(node, index) {
-    var id = node.id,
-        truthVal = MPL.truth(model, id, wff);
+  // nodes.forEach(function(node, index) {
+  //   var id = node.id,
+  //       truthVal = MPL.truth(model, id, wff);
 
-    if(truthVal) trueStates.push(id);
-    else falseStates.push(id);
+  //   if(truthVal) trueStates.push(id);
+  //   else falseStates.push(id);
 
-    d3.select(circle[0][index])
-      .classed('waiting', false)
-      .classed('true', truthVal)
-      .classed('false', !truthVal);
-  });
+  //   d3.select(circle[0][index])
+  //     .classed('waiting', false)
+  //     .classed('true', truthVal)
+  //     .classed('false', !truthVal);
+  // });
 
   // display evaluated formula
   currentFormula
